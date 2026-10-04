@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS — Mon compte</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+<a href="index.html" class="logo">NEXUS</a>
+
+<nav class="nav-links">
+<a href="index.html">Accueil</a>
+<a href="index.html#technologies">Technologies</a>
+<a href="index.html#fonctionnalites">Fonctionnalités</a>
+<a href="index.html#plans">Plans</a>
+<a href="compte.html">Mon compte</a>
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // ACCOUNT</span>
+
+<h1 id="welcome">Mon compte.</h1>
+
+<p class="hero-text">
+Bienvenue dans ton espace NEXUS.
+</p>
+
+<div class="feature-grid">
+
+<article class="feature-card">
+
+<div class="feature-icon">◉</div>
+
+<h3 id="username">Utilisateur</h3>
+
+<p id="email">
+Chargement...
+</p>
+
+<p>
+Statut :
+<strong id="role">...</strong>
+</p>
+
+<button id="logout" class="btn btn-primary">
+Déconnexion
+</button>
+
+</article>
+
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="terminal-top">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="terminal-content">
+
+<p class="terminal-green">
+&gt; NEXUS ACCOUNT
+</p>
+
+<p id="terminalUser">
+Chargement du profil...
+</p>
+
+<p class="terminal-green">
+&gt; ACCESS GRANTED
+</p>
+
+<div class="terminal-cursor"></div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+
+const account = JSON.parse(localStorage.getItem("nexusAccount"));
+const loggedIn = localStorage.getItem("nexusLoggedIn");
+
+if (!account || loggedIn !== "true") {
+    window.location.href = "connexion.html";
+} else {
+
+    document.getElementById("username").textContent =
+        account.username;
+
+    document.getElementById("email").textContent =
+        account.email;
+
+    document.getElementById("role").textContent =
+        account.role;
+
+    document.getElementById("terminalUser").textContent =
+        "Utilisateur : " + account.username;
+}
+
+document.getElementById("logout").addEventListener("click", function() {
+
+    localStorage.removeItem("nexusLoggedIn");
+
+    window.location.href = "index.html";
+
+});
+
+</script>
+
+</body>
+</html>

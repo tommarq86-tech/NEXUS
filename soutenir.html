@@ -1,0 +1,237 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Soutenir NEXUS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #0d1728 0%, #070b14 55%);
+            color: #f5f9ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .card {
+            width: min(620px, 100%);
+            background: rgba(10, 18, 32, 0.96);
+            border: 1px solid #253756;
+            border-radius: 22px;
+            padding: 38px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, .45);
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: #60a5fa;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 38px;
+        }
+
+        .intro {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin: 16px 0 30px;
+        }
+
+        .amounts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .amount {
+            border: 1px solid #304563;
+            background: #0d1728;
+            color: #f5f9ff;
+            padding: 14px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .amount:hover,
+        .amount.active {
+            border-color: #3b82f6;
+            background: #1d4ed8;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #304563;
+            background: #080d18;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+        }
+
+        .pay {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 16px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .pay:hover {
+            background: #1d4ed8;
+        }
+
+        .pay:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .message {
+            min-height: 22px;
+            margin-top: 15px;
+            color: #60a5fa;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .back {
+            display: block;
+            margin-top: 24px;
+            text-align: center;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="card">
+
+    <div class="logo">NEXUS</div>
+
+    <h1>Soutenir NEXUS</h1>
+
+    <p class="intro">
+        Si NEXUS t'est utile, tu peux aider à soutenir son développement.
+        Le paiement est effectué de manière sécurisée avec Stripe.
+    </p>
+
+    <div class="amounts">
+        <button class="amount" data-value="2">2 €</button>
+        <button class="amount" data-value="5">5 €</button>
+        <button class="amount" data-value="10">10 €</button>
+        <button class="amount" data-value="20">20 €</button>
+    </div>
+
+    <input
+        id="montant"
+        type="number"
+        min="1"
+        max="500"
+        step="1"
+        value="5"
+        placeholder="Montant en euros"
+    >
+
+    <button id="payer" class="pay">
+        Continuer vers le paiement
+    </button>
+
+    <div id="message" class="message"></div>
+
+    <a class="back" href="/">
+        ← Retour à NEXUS
+    </a>
+
+</main>
+
+<script>
+    const montant = document.getElementById("montant");
+    const payer = document.getElementById("payer");
+    const message = document.getElementById("message");
+
+    document.querySelectorAll(".amount").forEach(button => {
+        button.addEventListener("click", () => {
+            montant.value = button.dataset.value;
+
+            document.querySelectorAll(".amount").forEach(b => {
+                b.classList.remove("active");
+            });
+
+            button.classList.add("active");
+        });
+    });
+
+    payer.addEventListener("click", async () => {
+        const euros = Number(montant.value);
+
+        if (!Number.isInteger(euros) || euros < 1 || euros > 500) {
+            message.textContent = "Choisis un montant entre 1 € et 500 €.";
+            return;
+        }
+
+        payer.disabled = true;
+        message.textContent = "Ouverture du paiement sécurisé...";
+
+        try {
+            const response = await fetch("/api/donation/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    amount: euros
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.url) {
+                throw new Error(
+                    data.error || "Impossible de créer le paiement."
+                );
+            }
+
+            window.location.href = data.url;
+
+        } catch (error) {
+            message.textContent = error.message;
+            payer.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>

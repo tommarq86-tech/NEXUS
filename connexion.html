@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS — Connexion</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="logo">NEXUS</a>
+    <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="compte.html">Mon compte</a>
+        <a href="inscription.html">Créer un compte</a>
+    </nav>
+</header>
+
+<main>
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // LOGIN</span>
+
+<h1>Connexion.</h1>
+
+<p class="hero-text">
+    Connecte-toi à ton espace NEXUS.
+</p>
+
+<form id="loginForm">
+
+<div class="feature-card">
+
+<input id="email"
+       type="email"
+       placeholder="Adresse e-mail"
+       required
+       style="width:100%;box-sizing:border-box;margin:10px 0;padding:14px;background:#111;border:1px solid #333;color:inherit;">
+
+<input id="password"
+       type="password"
+       placeholder="Mot de passe"
+       required
+       style="width:100%;box-sizing:border-box;margin:10px 0;padding:14px;background:#111;border:1px solid #333;color:inherit;">
+
+<button type="submit" class="btn btn-primary">
+    Se connecter
+</button>
+
+<p id="message"></p>
+
+</div>
+
+</form>
+
+<div class="hero-buttons">
+<a href="inscription.html" class="btn auth-back">
+Créer un compte
+</a>
+</div>
+
+</div>
+
+<div class="hero-card">
+<div class="terminal-top">
+<span></span><span></span><span></span>
+</div>
+
+<div class="terminal-content">
+<p class="terminal-green">&gt; NEXUS LOGIN</p>
+<p>Authentification locale...</p>
+<p class="terminal-green">&gt; READY_</p>
+<div class="terminal-cursor"></div>
+</div>
+</div>
+
+</section>
+</main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim().toLowerCase();
+
+    if (email === "tommarq86@gmail.com") {
+        const account = {
+            username: "Tomma",
+            email: email,
+            role: "OWNER"
+        };
+
+        localStorage.setItem("nexusAccount", JSON.stringify(account));
+        localStorage.setItem("nexusLoggedIn", "true");
+
+        window.location.href = "compte.html";
+        return;
+    }
+
+    message.textContent = "Compte NEXUS introuvable.";
+});
+</script>
+
+</body>
+</html>
+
+
