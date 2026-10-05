@@ -1,16 +1,16 @@
-{
-  "name": "JARVIS PC Finder",
-  "short_name": "JARVIS",
-  "description": "Console locale de recherche et de comparaison de PC gaming en mode démo.",
-  "start_url": "/",
-  "scope": "/",
+﻿{
+  "name": "NEXUS",
+  "short_name": "NEXUS",
+  "description": "NEXUS Web",
+  "start_url": "/NEXUS/static/nexus-react/index.html",
+  "scope": "/NEXUS/static/nexus-react/",
   "display": "standalone",
   "background_color": "#0e151c",
   "theme_color": "#0e151c",
   "lang": "fr",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/NEXUS/static/nexus-react/favicon.svg",
       "sizes": "180x180",
       "type": "image/svg+xml",
       "purpose": "any maskable"
