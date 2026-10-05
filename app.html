@@ -1,24 +1,104 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-<head>`r`n    <link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS — Application</title>
-    <link rel="stylesheet" href="static/style.css">
-    <script src="maintenance.js"></script>`r`n</head>
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
+<title>NEXUS — Web</title>
+<link rel="stylesheet" href="static/style.css">
+<script src="maintenance.js"></script>
+</head>
+
 <body>
 
-<header>`r`n    <link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
-    <a href="index.html">NEXUS</a>
+<header class="navbar">
+
+<a href="index.html" class="logo">NEXUS</a>
+
+<nav class="nav-links">
+    <a href="compte.html">Espace NEXUS</a>
+    <a href="index.html">Accueil</a>
+</nav>
+
 </header>
 
 <main>
-    <h1>NEXUS</h1>
-    <p>L'application NEXUS sera bientôt disponible.</p>
-    <p><a href="index.html">Retour à l'accueil</a></p>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // WEB</span>
+
+<h1>NEXUS Web.</h1>
+
+<p class="hero-text">
+Lance NEXUS directement dans ton navigateur.
+</p>
+
+<div class="feature-card">
+
+<p>
+Tu es authentifié. L'application Web NEXUS peut maintenant être ouverte.
+</p>
+
+<a
+    href="static/nexus-react/index.html"
+    class="btn btn-primary">
+Ouvrir NEXUS Web
+</a>
+
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="terminal-top">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="terminal-content">
+
+<p class="terminal-green">
+&gt; NEXUS WEB
+</p>
+
+<p>
+Session authentifiée.
+</p>
+
+<p class="terminal-green">
+&gt; ACCESS GRANTED
+</p>
+
+<div class="terminal-cursor"></div>
+
+</div>
+
+</div>
+
+</section>
+
 </main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+
+if (
+    localStorage.getItem("nexusLoggedIn")
+    !== "true"
+) {
+    window.location.replace("connexion.html");
+}
+
+</script>
 
 </body>
 </html>
-
-
