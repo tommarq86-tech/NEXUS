@@ -302,7 +302,7 @@ body {
 
 /* Bouton parler */
 
-. {
+.voice-control {
     position: absolute;
     bottom: -40px;
     left: 50%;
@@ -455,33 +455,6 @@ body {
     }
 }
 </style>
-
-<style id="nexus-web-direct-interface">
-html, body {
-    width: 100%;
-    height: 100%;
-}
-
-#nexusInterface {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-#homeScreen {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-
-.talk-button,
-.voice-button,
-.,
-.home-hint {
-    display: none !important;
-}
-</style>
 </head>
 
 <body>
@@ -490,7 +463,33 @@ html, body {
      ECRAN D'ACCUEIL
      ======================================================== -->
 
+<section id="homeScreen">
 
+    <img
+        class="home-logo"
+        src="nexus-icon-512.png"
+        alt="NEXUS"
+    >
+
+    <h1 class="home-title">NEXUS</h1>
+
+    <div class="home-subtitle">
+        CONTRÔLE / SYSTÈME / INTELLIGENCE
+    </div>
+
+    <div class="home-status">
+        ● SYSTÈME STABLE
+    </div>
+
+    <button id="startButton" class="talk-button">
+        🎙 PARLER À NEXUS
+    </button>
+
+    <div class="home-hint">
+        Prêt. Appuie sur « Parler à NEXUS ».
+    </div>
+
+</section>
 
 
 <!-- ========================================================
@@ -517,7 +516,9 @@ html, body {
 
         </div>
 
-        
+        <button id="backButton" class="back-button">
+            ← Accueil
+        </button>
 
     </header>
 
@@ -548,7 +549,11 @@ html, body {
 
             </div>
 
-            
+            <div class="voice-control">
+
+                <button id="voiceButton" class="voice-button">
+                    🎙 PARLER À NEXUS
+                </button>
 
             </div>
 
@@ -580,7 +585,8 @@ if (localStorage.getItem("nexusLoggedIn") !== "true") {
 
 const homeScreen = document.getElementById("homeScreen");
 const nexusInterface = document.getElementById("nexusInterface");
-
+const startButton = document.getElementById("startButton");
+const voiceButton = document.getElementById("voiceButton");
 const backButton = document.getElementById("backButton");
 const core = document.getElementById("core");
 const systemState = document.getElementById("systemState");
@@ -595,14 +601,59 @@ let listening = false;
    OUVERTURE DE L'INTERFACE
    ============================================================ */
 
+function openNexus() {
 
+    homeScreen.classList.add("hidden");
+
+    setTimeout(() => {
+
+        homeScreen.style.display = "none";
+
+        nexusInterface.classList.add("active");
+
+        requestAnimationFrame(() => {
+            nexusInterface.classList.add("visible");
+        });
+
+        systemState.textContent = "SYSTÈME PRÊT";
+
+        speak(
+            "NEXUS est prêt. Je t'écoute."
+        );
+
+    }, 650);
+}
 
 
 /* ============================================================
    RETOUR ACCUEIL
    ============================================================ */
 
+function goHome() {
 
+    stopListening();
+
+    window.speechSynthesis.cancel();
+
+    nexusInterface.classList.remove("visible");
+
+    setTimeout(() => {
+
+        nexusInterface.classList.remove("active");
+
+        homeScreen.style.display = "flex";
+
+        requestAnimationFrame(() => {
+            homeScreen.classList.remove("hidden");
+        });
+
+        core.classList.remove("listening");
+        core.classList.remove("speaking");
+
+        systemState.textContent = "EN ATTENTE";
+
+    }, 600);
+}
 
 
 /* ============================================================
@@ -671,6 +722,7 @@ if (SpeechRecognition) {
 
         systemState.textContent = "ÉCOUTE EN COURS";
 
+        voiceButton.textContent = "⏹ ARRÊTER";
 
     };
 
@@ -683,6 +735,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
         await processCommand(text);
 
@@ -694,6 +747,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
         systemState.textContent = "SYSTÈME PRÊT";
 
@@ -705,6 +759,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
     };
 
@@ -761,6 +816,7 @@ function stopListening() {
 
     core.classList.remove("listening");
 
+    voiceButton.textContent = "🎙 PARLER À NEXUS";
 
 }
 
@@ -769,9 +825,17 @@ function stopListening() {
    BOUTONS
    ============================================================ */
 
+startButton.addEventListener(
+    "click",
+    openNexus
+);
 
+voiceButton.addEventListener(
+    "click",
+    () => {
 
-
+        if (listening) {
+            stopListening();
         } else {
             startListening();
         }
@@ -1118,5 +1182,3 @@ document.addEventListener(
 
 </body>
 </html>
-
-
