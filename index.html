@@ -71,8 +71,8 @@
 </script>
 <script id="nexus-console-bridge">
 (function () {
-    function connectNexusButton() {
-        var elements = document.querySelectorAll("a, button, [role='button']");
+    function connectNexus() {
+        var elements = document.querySelectorAll("a, button");
 
         for (var i = 0; i < elements.length; i++) {
             var element = elements[i];
@@ -84,30 +84,20 @@
                 label.indexOf("Acces a NEXUS") !== -1
             ) {
                 element.setAttribute("href", "/NEXUS/console/");
-
-                element.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    window.location.href = "/NEXUS/console/";
-                }, true);
             }
         }
     }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", connectNexusButton);
+        document.addEventListener("DOMContentLoaded", connectNexus);
     } else {
-        connectNexusButton();
+        connectNexus();
     }
-
-    new MutationObserver(connectNexusButton).observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
 })();
 </script>
 </body>
 </html>
+
 
 
 
