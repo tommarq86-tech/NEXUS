@@ -81,15 +81,15 @@
 
     if (!button || !overlay || !close) return;
 
-    button.onclick = function () {
+    button.addEventListener("click", function () {
         overlay.classList.add("open");
         document.body.style.overflow = "hidden";
-    };
+    });
 
-    close.onclick = function () {
+    close.addEventListener("click", function () {
         overlay.classList.remove("open");
         document.body.style.overflow = "";
-    };
+    });
 
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
