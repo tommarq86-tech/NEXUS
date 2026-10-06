@@ -478,16 +478,12 @@ body {
     </div>
 
     <div class="home-status">
-        ● SYSTÈME STABLE
+        
     </div>
 
-    <button id="startButton" class="talk-button">
-        🎙 PARLER À NEXUS
-    </button>
+    
 
-    <div class="home-hint">
-        Prêt. Appuie sur « Parler à NEXUS ».
-    </div>
+    
 
 </section>
 
@@ -549,13 +545,7 @@ body {
 
             </div>
 
-            <div class="voice-control">
-
-                <button id="voiceButton" class="voice-button">
-                    🎙 PARLER À NEXUS
-                </button>
-
-            </div>
+            
 
         </div>
 
@@ -585,8 +575,8 @@ if (localStorage.getItem("nexusLoggedIn") !== "true") {
 
 const homeScreen = document.getElementById("homeScreen");
 const nexusInterface = document.getElementById("nexusInterface");
-const startButton = document.getElementById("startButton");
-const voiceButton = document.getElementById("voiceButton");
+
+
 const backButton = document.getElementById("backButton");
 const core = document.getElementById("core");
 const systemState = document.getElementById("systemState");
@@ -722,7 +712,7 @@ if (SpeechRecognition) {
 
         systemState.textContent = "ÉCOUTE EN COURS";
 
-        voiceButton.textContent = "⏹ ARRÊTER";
+        
 
     };
 
@@ -735,7 +725,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
+        
 
         await processCommand(text);
 
@@ -747,7 +737,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
+        
 
         systemState.textContent = "SYSTÈME PRÊT";
 
@@ -759,7 +749,7 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
+        
 
     };
 
@@ -816,7 +806,7 @@ function stopListening() {
 
     core.classList.remove("listening");
 
-    voiceButton.textContent = "🎙 PARLER À NEXUS";
+    
 
 }
 
@@ -824,18 +814,6 @@ function stopListening() {
 /* ============================================================
    BOUTONS
    ============================================================ */
-
-startButton.addEventListener(
-    "click",
-    openNexus
-);
-
-voiceButton.addEventListener(
-    "click",
-    () => {
-
-        if (listening) {
-            stopListening();
         } else {
             startListening();
         }
