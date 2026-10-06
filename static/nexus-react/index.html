@@ -382,5 +382,223 @@
         src="./assets/index-C4bZbmBa.js">
     </script>
 
+
+<style id="nexus-fusion-style">
+
+#nexus-fusion-button {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 99990;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 14px 20px;
+
+    border: 1px solid rgba(0,220,255,.65);
+    border-radius: 14px;
+
+    background: rgba(2,12,27,.96);
+    color: #7eefff;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 25px rgba(0,220,255,.25),
+        inset 0 0 20px rgba(0,220,255,.04);
+
+    backdrop-filter: blur(12px);
+
+    transition: .2s ease;
+}
+
+#nexus-fusion-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 35px rgba(0,220,255,.45),
+        inset 0 0 20px rgba(0,220,255,.08);
+}
+
+#nexus-fusion-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: none;
+
+    background: #020712;
+}
+
+#nexus-fusion-overlay.open {
+    display: block;
+}
+
+#nexus-fusion-frame {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
+
+    background: #020712;
+}
+
+#nexus-fusion-close {
+    position: absolute;
+
+    top: 16px;
+    right: 20px;
+
+    z-index: 100001;
+
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid rgba(255,255,255,.30);
+    border-radius: 50%;
+
+    background: rgba(2,7,18,.92);
+    color: white;
+
+    font-size: 26px;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 20px rgba(0,0,0,.45);
+}
+
+#nexus-fusion-close:hover {
+    background: rgba(20,35,52,.98);
+}
+
+</style>
+
+
+<button
+    id="nexus-fusion-button"
+    type="button"
+>
+    🎙️ PARLER À NEXUS
+</button>
+
+
+<div
+    id="nexus-fusion-overlay"
+    aria-hidden="true"
+>
+
+    <button
+        id="nexus-fusion-close"
+        type="button"
+        aria-label="Fermer"
+    >
+        ×
+    </button>
+
+    <iframe
+        id="nexus-fusion-frame"
+        src="../../app.html"
+        title="Nexus Assistant Numérique PC Finder"
+        allow="microphone; autoplay"
+    ></iframe>
+
+</div>
+
+
+<script id="nexus-fusion-script">
+
+(function () {
+
+    function startNexusFusion() {
+
+        var button =
+            document.getElementById("nexus-fusion-button");
+
+        var overlay =
+            document.getElementById("nexus-fusion-overlay");
+
+        var close =
+            document.getElementById("nexus-fusion-close");
+
+        if (!button || !overlay || !close) {
+            return;
+        }
+
+        button.onclick = function () {
+
+            overlay.classList.add("open");
+
+            overlay.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow = "hidden";
+
+        };
+
+
+        close.onclick = function () {
+
+            overlay.classList.remove("open");
+
+            overlay.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            document.body.style.overflow = "";
+
+        };
+
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    overlay.classList.remove("open");
+
+                    overlay.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                    document.body.style.overflow = "";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            startNexusFusion
+        );
+
+    } else {
+
+        startNexusFusion();
+
+    }
+
+})();
+
+</script>
 </body>
 </html>
+
