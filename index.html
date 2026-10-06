@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -7,15 +7,15 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Nexus Assistant Numérique PC Finder</title>
-    <meta name="description" content="Nexus Assistant Numérique PC Finder â€” une console locale pour filtrer et comparer des PC gaming en mode dÃ©mo." />
+    <title>Nexus Assistant NumÃ©rique PC Finder</title>
+    <meta name="description" content="Nexus Assistant NumÃ©rique PC Finder Ã¢â‚¬â€ une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Nexus Assistant Numérique PC Finder" />
-    <meta property="og:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃ©mo." />
+    <meta property="og:title" content="Nexus Assistant NumÃ©rique PC Finder" />
+    <meta property="og:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nexus Assistant Numérique PC Finder" />
-    <meta name="twitter:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃ©mo." />
+    <meta name="twitter:title" content="Nexus Assistant NumÃ©rique PC Finder" />
+    <meta name="twitter:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +26,50 @@
   </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script>
+(function () {
+    function connectNexusButton() {
+        var elements = document.querySelectorAll("a, button, [role='button']");
+        for (var i = 0; i < elements.length; i++) {
+            var el = elements[i];
+            var label = (el.textContent || "").replace(/\s+/g, " ").trim();
+
+            if (
+                label === "Accéder à NEXUS" ||
+                label === "Acces a NEXUS" ||
+                label === "Accès à NEXUS" ||
+                label.indexOf("Accéder à NEXUS") !== -1 ||
+                label.indexOf("Accès à NEXUS") !== -1
+            ) {
+                el.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (event.stopImmediatePropagation) {
+                        event.stopImmediatePropagation();
+                    }
+                    window.location.href = "/NEXUS/console/";
+                }, true);
+            }
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", connectNexusButton);
+    } else {
+        connectNexusButton();
+    }
+
+    var observer = new MutationObserver(function () {
+        connectNexusButton();
+    });
+
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+</body>
 </html>
+
 
