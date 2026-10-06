@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#020712">
 <meta name="description" content="NEXUS - assistant intelligent">
-<link rel="icon" type="image/png" href="nexus-icon-512.png">
+<link rel="icon" type="image/png" href="./nexus-icon-512.png">
 <title>NEXUS</title>
 
 <style>
@@ -35,94 +35,7 @@ body {
    ECRAN INITIAL
    ========================================================= */
 
-#homeScreen {
-    position: fixed;
-    inset: 0;
-    z-index: 20;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background:
-        radial-gradient(circle at 50% 42%, rgba(0,120,255,.15), transparent 28%),
-        #020712;
-    transition: opacity .7s ease, transform .7s ease;
-}
-
-#homeScreen.hidden {
-    opacity: 0;
-    transform: scale(1.04);
-    pointer-events: none;
-}
-
-.home-logo {
-    width: 130px;
-    height: 130px;
-    object-fit: contain;
-    margin-bottom: 22px;
-    filter:
-        drop-shadow(0 0 15px rgba(0,180,255,.55))
-        drop-shadow(0 0 45px rgba(0,100,255,.25));
-    animation: homeFloat 4s ease-in-out infinite;
-}
-
-@keyframes homeFloat {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-}
-
-.home-title {
-    margin: 0;
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: .24em;
-    text-shadow: 0 0 25px rgba(0,180,255,.35);
-}
-
-.home-subtitle {
-    margin-top: 12px;
-    color: #6f91a5;
-    font-size: 13px;
-    letter-spacing: .28em;
-}
-
-.home-status {
-    margin-top: 30px;
-    font-size: 12px;
-    letter-spacing: .18em;
-    color: #54d7ff;
-}
-
-.talk-button {
-    margin-top: 35px;
-    border: 1px solid rgba(66,210,255,.65);
-    border-radius: 999px;
-    padding: 17px 34px;
-    color: #eaffff;
-    background: rgba(0,100,180,.14);
-    box-shadow:
-        0 0 20px rgba(0,180,255,.16),
-        inset 0 0 20px rgba(0,130,255,.06);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    transition: .25s ease;
-}
-
-.talk-button:hover {
-    transform: translateY(-2px);
-    background: rgba(0,140,220,.22);
-    box-shadow:
-        0 0 35px rgba(0,190,255,.3),
-        inset 0 0 25px rgba(0,130,255,.1);
-}
-
-.home-hint {
-    margin-top: 18px;
-    color: #506779;
-    font-size: 12px;
+50% { transform: translateY(-7px); }
 }
 
 /* =========================================================
@@ -302,31 +215,6 @@ body {
 
 /* Bouton parler */
 
-.voice-control {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: auto;
-    white-space: nowrap;
-}
-
-.voice-button {
-    border: 1px solid rgba(65,210,255,.45);
-    border-radius: 999px;
-    padding: 13px 25px;
-    color: #dffaff;
-    background: rgba(0,90,160,.16);
-    cursor: pointer;
-    font-weight: 700;
-    letter-spacing: .1em;
-    box-shadow: 0 0 25px rgba(0,150,255,.12);
-}
-
-.voice-button:hover {
-    background: rgba(0,130,210,.25);
-}
-
 /* =========================================================
    RESULTATS
    ========================================================= */
@@ -455,6 +343,14 @@ body {
     }
 }
 </style>
+
+<style id="nexus-direct-interface">
+#nexusInterface {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+</style>
 </head>
 
 <body>
@@ -467,7 +363,7 @@ body {
 
     <img
         class="home-logo"
-        src="nexus-icon-512.png"
+        src="./nexus-icon-512.png"
         alt="NEXUS"
     >
 
@@ -481,12 +377,11 @@ body {
         ● SYSTÈME STABLE
     </div>
 
-    <button id="startButton" class="talk-button">
-        🎙 PARLER À NEXUS
+        🎙 
     </button>
 
     <div class="home-hint">
-        Prêt. Appuie sur « Parler à NEXUS ».
+        Prêt. Appuie sur «  ».
     </div>
 
 </section>
@@ -503,7 +398,7 @@ body {
         <div class="brand">
 
             <img
-                src="nexus-icon-512.png"
+                src="./nexus-icon-512.png"
                 alt="NEXUS"
             >
 
@@ -543,19 +438,13 @@ body {
 
                 <img
                     class="core-logo"
-                    src="nexus-icon-512.png"
+                    src="./nexus-icon-512.png"
                     alt="NEXUS"
                 >
 
             </div>
 
-            <div class="voice-control">
-
-                <button id="voiceButton" class="voice-button">
-                    🎙 PARLER À NEXUS
-                </button>
-
-            </div>
+            
 
         </div>
 
@@ -583,10 +472,10 @@ if (localStorage.getItem("nexusLoggedIn") !== "true") {
    ELEMENTS
    ============================================================ */
 
-const homeScreen = document.getElementById("homeScreen");
+
 const nexusInterface = document.getElementById("nexusInterface");
-const startButton = document.getElementById("startButton");
-const voiceButton = document.getElementById("voiceButton");
+
+
 const backButton = document.getElementById("backButton");
 const core = document.getElementById("core");
 const systemState = document.getElementById("systemState");
@@ -722,7 +611,6 @@ if (SpeechRecognition) {
 
         systemState.textContent = "ÉCOUTE EN COURS";
 
-        voiceButton.textContent = "⏹ ARRÊTER";
 
     };
 
@@ -735,7 +623,6 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
         await processCommand(text);
 
@@ -747,7 +634,6 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
         systemState.textContent = "SYSTÈME PRÊT";
 
@@ -759,7 +645,6 @@ if (SpeechRecognition) {
 
         core.classList.remove("listening");
 
-        voiceButton.textContent = "🎙 PARLER À NEXUS";
 
     };
 
@@ -816,7 +701,6 @@ function stopListening() {
 
     core.classList.remove("listening");
 
-    voiceButton.textContent = "🎙 PARLER À NEXUS";
 
 }
 
@@ -825,12 +709,10 @@ function stopListening() {
    BOUTONS
    ============================================================ */
 
-startButton.addEventListener(
     "click",
     openNexus
 );
 
-voiceButton.addEventListener(
     "click",
     () => {
 
@@ -1180,5 +1062,34 @@ document.addEventListener(
 );
 </script>
 
+
+<script id="nexus-direct-interface-script">
+document.addEventListener("DOMContentLoaded", function () {
+    var nexusInterface = document.getElementById("nexusInterface");
+
+    if (nexusInterface) {
+        nexusInterface.classList.add("active");
+        nexusInterface.classList.add("visible");
+        nexusInterface.style.display = "block";
+        nexusInterface.style.opacity = "1";
+        nexusInterface.style.visibility = "visible";
+    }
+
+    var homeScreen = document.getElementById("homeScreen");
+
+    if (homeScreen) {
+        homeScreen.remove();
+    }
+
+    document.querySelectorAll(
+        ".talk-button, ., .voice-button, .home-hint"
+    ).forEach(function (element) {
+        element.remove();
+    });
+});
+</script>
 </body>
 </html>
+
+
+
