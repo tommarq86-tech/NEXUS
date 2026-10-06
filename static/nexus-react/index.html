@@ -1,882 +1,1185 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
 <head>`r`n    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">`r`n    <base href="./">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color" content="#020712">
-    <meta name="description" content="NEXUS - Assistant Numérique PC Finder">
-
-    <link rel="icon" type="image/png" href="./nexus-icon-512.png">
-
-    <title>NEXUS — Assistant Numérique PC Finder</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-            background: #020712;
-            color: #eaf6ff;
-            font-family:
-                Inter,
-                ui-sans-serif,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .app {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background:
-                radial-gradient(circle at 50% -10%, rgba(0, 183, 255, .16), transparent 38%),
-                radial-gradient(circle at 10% 80%, rgba(0, 103, 255, .08), transparent 35%),
-                #020712;
-        }
-
-        /* TOPBAR */
-
-        .topbar {
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 28px;
-            border-bottom: 1px solid rgba(130, 210, 255, .10);
-            background: rgba(2, 7, 18, .88);
-            backdrop-filter: blur(18px);
-            position: sticky;
-            top: 0;
-            z-index: 20;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-orb {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            background:
-                radial-gradient(circle at 35% 30%, #ffffff, #58d5ff 22%, #087eff 58%, #061b48 100%);
-            box-shadow:
-                0 0 24px rgba(0, 166, 255, .35),
-                inset 0 0 14px rgba(255, 255, 255, .35);
-            color: white;
-            font-weight: 900;
-        }
-
-        .brand-name {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: .08em;
-        }
-
-        .brand-sub {
-            font-size: 11px;
-            color: #7d9ab2;
-            margin-top: 2px;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #8ca9bd;
-            font-size: 12px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #36e58c;
-            box-shadow: 0 0 12px rgba(54, 229, 140, .8);
-        }
-
-        /* MAIN */
-
-        .main {
-            flex: 1;
-            width: min(1180px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 42px 0 50px;
-            display: grid;
-            grid-template-columns: 1.25fr .75fr;
-            gap: 22px;
-        }
-
-        .hero {
-            min-height: 570px;
-            border: 1px solid rgba(111, 198, 255, .12);
-            border-radius: 28px;
-            background:
-                linear-gradient(145deg, rgba(9, 24, 48, .84), rgba(3, 9, 21, .94));
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, .32),
-                inset 0 1px 0 rgba(255, 255, 255, .035);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 48px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: rgba(0, 153, 255, .07);
-            filter: blur(70px);
-            top: -260px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .core {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            margin-bottom: 32px;
-        }
-
-        .core-ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 1px solid rgba(76, 194, 255, .28);
-            box-shadow:
-                0 0 40px rgba(0, 150, 255, .12),
-                inset 0 0 30px rgba(0, 150, 255, .08);
-        }
-
-        .core-ring::before,
-        .core-ring::after {
-            content: "";
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(92, 200, 255, .18);
-        }
-
-        .core-ring::before {
-            inset: 16px;
-        }
-
-        .core-ring::after {
-            inset: 34px;
-        }
-
-        .core-center {
-            width: 92px;
-            height: 92px;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 35% 25%, #ffffff, #68dcff 16%, #087fff 55%, #03183c 100%);
-            box-shadow:
-                0 0 45px rgba(0, 157, 255, .5),
-                0 0 90px rgba(0, 99, 255, .16);
-            animation: breathe 3s ease-in-out infinite;
-        }
-
-        @keyframes breathe {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow:
-                    0 0 45px rgba(0, 157, 255, .5),
-                    0 0 90px rgba(0, 99, 255, .16);
-            }
-
-            50% {
-                transform: scale(1.06);
-                box-shadow:
-                    0 0 60px rgba(0, 190, 255, .72),
-                    0 0 110px rgba(0, 99, 255, .22);
-            }
-        }
-
-        .listening .core-center {
-            animation: listeningPulse .8s ease-in-out infinite alternate;
-        }
-
-        .listening .core-ring {
-            animation: spin 4s linear infinite;
-        }
-
-        @keyframes listeningPulse {
-            from {
-                transform: scale(.94);
-            }
-
-            to {
-                transform: scale(1.15);
-            }
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .eyebrow {
-            color: #5acfff;
-            font-size: 11px;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: clamp(32px, 5vw, 52px);
-            letter-spacing: -.035em;
-            line-height: 1;
-        }
-
-        .hero-text {
-            max-width: 620px;
-            color: #8da8bd;
-            line-height: 1.65;
-            margin: 18px auto 28px;
-        }
-
-        .talk {
-            border: 0;
-            border-radius: 16px;
-            padding: 15px 24px;
-            color: white;
-            font-weight: 800;
-            background: linear-gradient(135deg, #008cff, #0059ff);
-            box-shadow:
-                0 12px 32px rgba(0, 110, 255, .28),
-                inset 0 1px 0 rgba(255,255,255,.22);
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .talk:hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 16px 38px rgba(0, 130, 255, .38),
-                inset 0 1px 0 rgba(255,255,255,.25);
-        }
-
-        .talk:active {
-            transform: translateY(0);
-        }
-
-        /* RIGHT PANEL */
-
-        .side {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .card {
-            border: 1px solid rgba(111, 198, 255, .11);
-            border-radius: 22px;
-            background: rgba(6, 16, 32, .78);
-            padding: 22px;
-            box-shadow: 0 20px 50px rgba(0,0,0,.18);
-        }
-
-        .card-title {
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: #b9d3e5;
-            margin-bottom: 16px;
-        }
-
-        .feature {
-            display: flex;
-            gap: 12px;
-            padding: 13px 0;
-            border-bottom: 1px solid rgba(255,255,255,.055);
-        }
-
-        .feature:last-child {
-            border-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .feature-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            background: rgba(0, 145, 255, .10);
-            color: #61d2ff;
-            flex: 0 0 auto;
-        }
-
-        .feature strong {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 3px;
-        }
-
-        .feature span {
-            color: #708ca2;
-            font-size: 12px;
-            line-height: 1.45;
-        }
-
-        .console {
-            flex: 1;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .messages {
-            flex: 1;
-            color: #7d99af;
-            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-            font-size: 11px;
-            line-height: 1.8;
-        }
-
-        .message-line {
-            opacity: .85;
-        }
-
-        .message-line b {
-            color: #54cfff;
-        }
-
-        /* VOICE MODAL */
-
-        .voice {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 4, 12, .78);
-            backdrop-filter: blur(18px);
-        }
-
-        .voice.open {
-            display: flex;
-        }
-
-        .voice-box {
-            width: min(560px, 100%);
-            border: 1px solid rgba(91, 205, 255, .20);
-            border-radius: 30px;
-            padding: 38px;
-            text-align: center;
-            background:
-                radial-gradient(circle at 50% 0%, rgba(0, 168, 255, .13), transparent 45%),
-                #050d1c;
-            box-shadow: 0 35px 100px rgba(0,0,0,.55);
-        }
-
-        .voice-orb {
-            width: 170px;
-            height: 170px;
-            margin: 10px auto 26px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            position: relative;
-        }
-
-        .voice-orb::before,
-        .voice-orb::after {
-            content: "";
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(72, 205, 255, .25);
-        }
-
-        .voice-orb::before {
-            inset: 0;
-            animation: voiceRing 2s ease-in-out infinite;
-        }
-
-        .voice-orb::after {
-            inset: 18px;
-            animation: voiceRing 1.5s ease-in-out infinite reverse;
-        }
-
-        @keyframes voiceRing {
-            0%, 100% {
-                transform: scale(.9);
-                opacity: .35;
-            }
-
-            50% {
-                transform: scale(1.08);
-                opacity: 1;
-            }
-        }
-
-        .voice-core {
-            width: 78px;
-            height: 78px;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 35% 25%, #fff, #58d8ff 18%, #0088ff 55%, #06214d);
-            box-shadow:
-                0 0 45px rgba(0, 174, 255, .55);
-            animation: voiceCore 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes voiceCore {
-            from {
-                transform: scale(.94);
-            }
-
-            to {
-                transform: scale(1.08);
-            }
-        }
-
-        .voice-state {
-            color: #61d5ff;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .18em;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .voice-box h2 {
-            margin: 0;
-            font-size: 30px;
-        }
-
-        .voice-help {
-            color: #7f9aae;
-            line-height: 1.6;
-            margin: 12px auto 26px;
-            max-width: 430px;
-        }
-
-        .voice-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .stop {
-            border: 1px solid rgba(255,255,255,.10);
-            border-radius: 13px;
-            background: rgba(255,255,255,.05);
-            color: #c7d7e3;
-            padding: 12px 22px;
-        }
-
-        .stop:hover {
-            background: rgba(255,255,255,.09);
-        }
-
-        .voice-error {
-            display: none;
-            color: #ff9b9b;
-            font-size: 12px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 850px) {
-            .topbar {
-                padding: 0 16px;
-            }
-
-            .main {
-                grid-template-columns: 1fr;
-                width: min(100% - 20px, 700px);
-                padding-top: 20px;
-            }
-
-            .hero {
-                min-height: 520px;
-                padding: 30px 20px;
-            }
-
-            .side {
-                display: grid;
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#020712">
+<meta name="description" content="NEXUS - assistant intelligent">
+<link rel="icon" type="image/png" href="nexus-icon-512.png">
+<title>NEXUS Web - Console</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #020712;
+    color: #dff7ff;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(circle at 50% 50%, rgba(0,120,255,.12), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(0,210,255,.06), transparent 55%),
+        #020712;
+}
+
+/* =========================================================
+   ECRAN INITIAL
+   ========================================================= */
+
+#homeScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 42%, rgba(0,120,255,.15), transparent 28%),
+        #020712;
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+#homeScreen.hidden {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+}
+
+.home-logo {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    margin-bottom: 22px;
+    filter:
+        drop-shadow(0 0 15px rgba(0,180,255,.55))
+        drop-shadow(0 0 45px rgba(0,100,255,.25));
+    animation: homeFloat 4s ease-in-out infinite;
+}
+
+@keyframes homeFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+.home-title {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: .24em;
+    text-shadow: 0 0 25px rgba(0,180,255,.35);
+}
+
+.home-subtitle {
+    margin-top: 12px;
+    color: #6f91a5;
+    font-size: 13px;
+    letter-spacing: .28em;
+}
+
+.home-status {
+    margin-top: 30px;
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: #54d7ff;
+}
+
+.talk-button {
+    margin-top: 35px;
+    border: 1px solid rgba(66,210,255,.65);
+    border-radius: 999px;
+    padding: 17px 34px;
+    color: #eaffff;
+    background: rgba(0,100,180,.14);
+    box-shadow:
+        0 0 20px rgba(0,180,255,.16),
+        inset 0 0 20px rgba(0,130,255,.06);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    transition: .25s ease;
+}
+
+.talk-button:hover {
+    transform: translateY(-2px);
+    background: rgba(0,140,220,.22);
+    box-shadow:
+        0 0 35px rgba(0,190,255,.3),
+        inset 0 0 25px rgba(0,130,255,.1);
+}
+
+.home-hint {
+    margin-top: 18px;
+    color: #506779;
+    font-size: 12px;
+}
+
+/* =========================================================
+   INTERFACE NEXUS
+   ========================================================= */
+
+#nexusInterface {
+    position: fixed;
+    inset: 0;
+    display: none;
+    opacity: 0;
+    transition: opacity .7s ease;
+}
+
+#nexusInterface.active {
+    display: block;
+}
+
+#nexusInterface.visible {
+    opacity: 1;
+}
+
+/* Barre supérieure */
+
+.topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    border-bottom: 1px solid rgba(90,180,255,.08);
+    background: rgba(2,7,18,.45);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.brand img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.brand-state {
+    color: #50d5ff;
+    font-size: 10px;
+    letter-spacing: .15em;
+}
+
+.back-button {
+    border: 1px solid rgba(120,190,220,.18);
+    background: rgba(255,255,255,.025);
+    color: #88a7b8;
+    border-radius: 8px;
+    padding: 8px 13px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    color: white;
+    border-color: rgba(100,210,255,.4);
+}
+
+/* Zone centrale */
+
+.center {
+    position: absolute;
+    inset: 72px 0 90px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.core-zone {
+    position: relative;
+    width: 520px;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.core {
+    position: relative;
+    width: 235px;
+    height: 235px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(50,190,255,.20),
+            rgba(0,45,100,.22) 48%,
+            rgba(0,10,25,.88) 72%);
+    border: 1px solid rgba(65,205,255,.48);
+    box-shadow:
+        0 0 25px rgba(0,150,255,.25),
+        0 0 80px rgba(0,100,255,.12),
+        inset 0 0 45px rgba(0,170,255,.12);
+    transition:
+        width .7s cubic-bezier(.2,.8,.2,1),
+        height .7s cubic-bezier(.2,.8,.2,1),
+        box-shadow .5s ease;
+}
+
+.core::before,
+.core::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(50,190,255,.14);
+}
+
+.core::before {
+    inset: -25px;
+}
+
+.core::after {
+    inset: -50px;
+    border-color: rgba(50,160,255,.07);
+}
+
+.core-logo {
+    width: 112px;
+    height: 112px;
+    object-fit: contain;
+    filter:
+        drop-shadow(0 0 15px rgba(0,200,255,.65))
+        drop-shadow(0 0 35px rgba(0,100,255,.35));
+}
+
+.core.listening {
+    width: 290px;
+    height: 290px;
+    box-shadow:
+        0 0 35px rgba(0,190,255,.38),
+        0 0 110px rgba(0,120,255,.2),
+        inset 0 0 60px rgba(0,190,255,.16);
+    animation: listenPulse 1.6s ease-in-out infinite;
+}
+
+.core.speaking {
+    width: 360px;
+    height: 360px;
+    box-shadow:
+        0 0 50px rgba(0,210,255,.5),
+        0 0 150px rgba(0,120,255,.25),
+        inset 0 0 75px rgba(0,210,255,.2);
+    animation: speakPulse .7s ease-in-out infinite alternate;
+}
+
+@keyframes listenPulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.035); }
+}
+
+@keyframes speakPulse {
+    from { transform: scale(.97); }
+    to { transform: scale(1.04); }
+}
+
+/* Bouton parler */
+
+.voice-control {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+    white-space: nowrap;
+}
+
+.voice-button {
+    border: 1px solid rgba(65,210,255,.45);
+    border-radius: 999px;
+    padding: 13px 25px;
+    color: #dffaff;
+    background: rgba(0,90,160,.16);
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: .1em;
+    box-shadow: 0 0 25px rgba(0,150,255,.12);
+}
+
+.voice-button:hover {
+    background: rgba(0,130,210,.25);
+}
+
+/* =========================================================
+   RESULTATS
+   ========================================================= */
+
+.results {
+    position: absolute;
+    top: 100px;
+    bottom: 110px;
+    width: 31%;
+    overflow-y: auto;
+    display: none;
+    z-index: 5;
+}
+
+.results.visible {
+    display: block;
+}
+
+.results.left {
+    left: 24px;
+}
+
+.results.right {
+    right: 24px;
+}
+
+.result-card {
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(80,190,255,.14);
+    border-radius: 13px;
+    background: rgba(5,18,34,.68);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(0,100,200,.06);
+}
+
+.result-card h3 {
+    margin: 0 0 8px;
+    color: #75dcff;
+    font-size: 15px;
+}
+
+.result-card p {
+    margin: 0;
+    color: #91aab9;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.result-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #4dd6ff;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+/* =========================================================
+   STATUS BAS
+   ========================================================= */
+
+.bottom-status {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #587587;
+    font-size: 11px;
+    letter-spacing: .14em;
+}
+
+.bottom-status strong {
+    color: #53d7ff;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .results {
+        width: 42%;
+    }
+
+    .core {
+        width: 200px;
+        height: 200px;
+    }
+
+    .core.listening {
+        width: 255px;
+        height: 255px;
+    }
+
+    .core.speaking {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 650px) {
+    .home-title {
+        font-size: 34px;
+    }
+
+    .home-subtitle {
+        font-size: 10px;
+    }
+
+    .results {
+        width: calc(100% - 24px);
+        left: 12px !important;
+        right: 12px !important;
+        top: auto;
+        bottom: 105px;
+        max-height: 28vh;
+    }
+
+    .results.right {
+        display: none !important;
+    }
+
+    .core-zone {
+        transform: scale(.82);
+    }
+}
+</style>
 </head>
 
 <body>
-<div class="app">
+
+<!-- ========================================================
+     ECRAN D'ACCUEIL
+     ======================================================== -->
+
+<section id="homeScreen">
+
+    <img
+        class="home-logo"
+        src="nexus-icon-512.png"
+        alt="NEXUS"
+    >
+
+    <h1 class="home-title">NEXUS</h1>
+
+    <div class="home-subtitle">
+        CONTRÔLE / SYSTÈME / INTELLIGENCE
+    </div>
+
+    <div class="home-status">
+        ● SYSTÈME STABLE
+    </div>
+
+    <button id="startButton" class="talk-button">
+        🎙 PARLER À NEXUS
+    </button>
+
+    <div class="home-hint">
+        Prêt. Appuie sur « Parler à NEXUS ».
+    </div>
+
+</section>
+
+
+<!-- ========================================================
+     INTERFACE COMPLETE
+     ======================================================== -->
+
+<section id="nexusInterface">
 
     <header class="topbar">`r`n    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">`r`n    <base href="./">
+
         <div class="brand">
-            <div class="brand-orb">N</div>
+
+            <img
+                src="nexus-icon-512.png"
+                alt="NEXUS"
+            >
+
             <div>
                 <div class="brand-name">NEXUS</div>
-                <div class="brand-sub">Assistant Numérique PC Finder</div>
+                <div class="brand-state" id="systemState">
+                    EN ATTENTE
+                </div>
             </div>
+
         </div>
 
-        <div class="status">
-            <span class="status-dot"></span>
-            NEXUS opérationnel
-        </div>
+        <button id="backButton" class="back-button">
+            ← Accueil
+        </button>
+
     </header>
 
-    <main class="main">
 
-        <section class="hero">
+    <!-- RESULTATS GAUCHE -->
 
-            <div class="core" id="core">
-                <div class="core-ring"></div>
-                <div class="core-center"></div>
+    <aside id="leftResults" class="results left"></aside>
+
+
+    <!-- RESULTATS DROITE -->
+
+    <aside id="rightResults" class="results right"></aside>
+
+
+    <!-- CENTRE -->
+
+    <main class="center">
+
+        <div class="core-zone">
+
+            <div id="core" class="core">
+
+                <img
+                    class="core-logo"
+                    src="nexus-icon-512.png"
+                    alt="NEXUS"
+                >
+
             </div>
 
-            <div class="eyebrow">NEXUS WEB</div>
+            <div class="voice-control">
 
-            <h1>Assistant Numérique</h1>
+                <button id="voiceButton" class="voice-button">
+                    🎙 PARLER À NEXUS
+                </button>
 
-            <p class="hero-text">
-                Ton assistant intelligent pour rechercher, comprendre,
-                contrôler et trouver les informations dont tu as besoin.
-            </p>
+            </div>
 
-            <button class="talk" id="talkButton">
-                🎙️ Parler à NEXUS
-            </button>
-
-        </section>
-
-        <aside class="side">
-
-            <section class="card">
-                <div class="card-title">Capacités NEXUS</div>
-
-                <div class="feature">
-                    <div class="feature-icon">◉</div>
-                    <div>
-                        <strong>Assistant vocal</strong>
-                        <span>Parle directement avec NEXUS depuis ton navigateur.</span>
-                    </div>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">⌕</div>
-                    <div>
-                        <strong>PC Finder</strong>
-                        <span>Recherche et comparaison de matériel informatique.</span>
-                    </div>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">✦</div>
-                    <div>
-                        <strong>Intelligence NEXUS</strong>
-                        <span>Une interface pensée pour centraliser tes outils.</span>
-                    </div>
-                </div>
-            </section>
-
-            <section class="card console">
-                <div class="card-title">Console NEXUS</div>
-
-                <div class="messages" id="messages">
-                    <div class="message-line">
-                        <b>[NEXUS]</b> Initialisation...
-                    </div>
-
-                    <div class="message-line">
-                        <b>[SYSTEM]</b> Interface Web chargée.
-                    </div>
-
-                    <div class="message-line">
-                        <b>[VOICE]</b> Système vocal prêt.
-                    </div>
-
-                    <div class="message-line">
-                        <b>[NEXUS]</b> En attente d'une commande.
-                    </div>
-                </div>
-            </section>
-
-        </aside>
+        </div>
 
     </main>
 
-</div>
 
-<!-- PANNEAU PARLER A NEXUS -->
-
-<div class="voice" id="voicePanel">
-
-    <div class="voice-box">
-
-        <div class="voice-orb">
-            <div class="voice-core"></div>
-        </div>
-
-        <div class="voice-state" id="voiceState">
-            NEXUS écoute
-        </div>
-
-        <h2>Parler à NEXUS</h2>
-
-        <p class="voice-help" id="voiceHelp">
-            Autorise ton navigateur à utiliser ton microphone,
-            puis parle normalement à NEXUS.
-        </p>
-
-        <div class="voice-actions">
-            <button class="stop" id="stopVoice">
-                Fermer
-            </button>
-        </div>
-
-        <div class="voice-error" id="voiceError"></div>
-
+    <div class="bottom-status">
+        NEXUS / <strong>PLUS QU'UN SYSTÈME</strong>
     </div>
 
-</div>
+</section>
+
 
 <script>
-(function () {
+/* ============================================================
+   AUTHENTIFICATION
+   ============================================================ */
 
-    const talkButton = document.getElementById("talkButton");
-    const voicePanel = document.getElementById("voicePanel");
-    const stopVoice = document.getElementById("stopVoice");
-    const voiceState = document.getElementById("voiceState");
-    const voiceHelp = document.getElementById("voiceHelp");
-    const voiceError = document.getElementById("voiceError");
-    const core = document.getElementById("core");
-    const messages = document.getElementById("messages");
+if (localStorage.getItem("nexusLoggedIn") !== "true") {
+    window.location.replace("connexion.html");
+}
 
-    let recognition = null;
-    let listening = false;
 
-    function addMessage(type, text) {
-        const line = document.createElement("div");
-        line.className = "message-line";
+/* ============================================================
+   ELEMENTS
+   ============================================================ */
 
-        const label = document.createElement("b");
-        label.textContent = "[" + type + "] ";
+const homeScreen = document.getElementById("homeScreen");
+const nexusInterface = document.getElementById("nexusInterface");
+const startButton = document.getElementById("startButton");
+const voiceButton = document.getElementById("voiceButton");
+const backButton = document.getElementById("backButton");
+const core = document.getElementById("core");
+const systemState = document.getElementById("systemState");
+const leftResults = document.getElementById("leftResults");
+const rightResults = document.getElementById("rightResults");
 
-        line.appendChild(label);
-        line.appendChild(document.createTextNode(text));
+let recognition = null;
+let listening = false;
 
-        messages.appendChild(line);
-        messages.scrollTop = messages.scrollHeight;
+
+/* ============================================================
+   OUVERTURE DE L'INTERFACE
+   ============================================================ */
+
+function openNexus() {
+
+    homeScreen.classList.add("hidden");
+
+    setTimeout(() => {
+
+        homeScreen.style.display = "none";
+
+        nexusInterface.classList.add("active");
+
+        requestAnimationFrame(() => {
+            nexusInterface.classList.add("visible");
+        });
+
+        systemState.textContent = "SYSTÈME PRÊT";
+
+        speak(
+            "NEXUS est prêt. Je t'écoute."
+        );
+
+    }, 650);
+}
+
+
+/* ============================================================
+   RETOUR ACCUEIL
+   ============================================================ */
+
+function goHome() {
+
+    stopListening();
+
+    window.speechSynthesis.cancel();
+
+    nexusInterface.classList.remove("visible");
+
+    setTimeout(() => {
+
+        nexusInterface.classList.remove("active");
+
+        homeScreen.style.display = "flex";
+
+        requestAnimationFrame(() => {
+            homeScreen.classList.remove("hidden");
+        });
+
+        core.classList.remove("listening");
+        core.classList.remove("speaking");
+
+        systemState.textContent = "EN ATTENTE";
+
+    }, 600);
+}
+
+
+/* ============================================================
+   VOIX NEXUS
+   ============================================================ */
+
+function speak(text) {
+
+    if (!("speechSynthesis" in window)) {
+        return;
     }
 
-    function openVoice() {
-        voicePanel.classList.add("open");
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = "fr-FR";
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    core.classList.add("speaking");
+    systemState.textContent = "NEXUS PARLE";
+
+    utterance.onend = () => {
+
+        core.classList.remove("speaking");
+
+        if (!listening) {
+            systemState.textContent = "SYSTÈME PRÊT";
+        }
+
+    };
+
+    utterance.onerror = () => {
+
+        core.classList.remove("speaking");
+        systemState.textContent = "SYSTÈME PRÊT";
+
+    };
+
+    window.speechSynthesis.speak(utterance);
+}
+
+
+/* ============================================================
+   RECONNAISSANCE VOCALE
+   ============================================================ */
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+    recognition = new SpeechRecognition();
+
+    recognition.lang = "fr-FR";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+
+        listening = true;
+
         core.classList.add("listening");
 
-        voiceState.textContent = "NEXUS écoute";
-        voiceHelp.textContent =
-            "Parle maintenant. NEXUS écoute ta voix.";
+        systemState.textContent = "ÉCOUTE EN COURS";
 
-        voiceError.style.display = "none";
+        voiceButton.textContent = "⏹ ARRÊTER";
 
-        addMessage("VOICE", "Session vocale ouverte.");
+    };
 
-        startRecognition();
-    }
+    recognition.onresult = async (event) => {
 
-    function closeVoice() {
-        voicePanel.classList.remove("open");
-        core.classList.remove("listening");
+        const text =
+            event.results[0][0].transcript.trim();
 
         listening = false;
 
-        if (recognition) {
-            try {
-                recognition.stop();
-            } catch (e) {}
-        }
+        core.classList.remove("listening");
 
-        voiceState.textContent = "NEXUS prêt";
-        addMessage("VOICE", "Session vocale fermée.");
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
+
+        await processCommand(text);
+
+    };
+
+    recognition.onerror = () => {
+
+        listening = false;
+
+        core.classList.remove("listening");
+
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
+
+        systemState.textContent = "SYSTÈME PRÊT";
+
+    };
+
+    recognition.onend = () => {
+
+        listening = false;
+
+        core.classList.remove("listening");
+
+        voiceButton.textContent = "🎙 PARLER À NEXUS";
+
+    };
+
+}
+
+
+/* ============================================================
+   ECOUTER
+   ============================================================ */
+
+function startListening() {
+
+    if (!recognition) {
+
+        speak(
+            "La reconnaissance vocale n'est pas disponible dans ce navigateur."
+        );
+
+        return;
     }
 
-    function startRecognition() {
+    try {
 
-        const SpeechRecognition =
-            window.SpeechRecognition ||
-            window.webkitSpeechRecognition;
+        window.speechSynthesis.cancel();
 
-        if (!SpeechRecognition) {
-            voiceState.textContent = "Mode vocal indisponible";
+        recognition.start();
 
-            voiceHelp.textContent =
-                "La reconnaissance vocale de ce navigateur n'est pas disponible.";
+    } catch (error) {
 
-            voiceError.textContent =
-                "Essaie avec Google Chrome ou Microsoft Edge.";
+        console.log(error);
 
-            voiceError.style.display = "block";
-
-            addMessage("VOICE", "Reconnaissance vocale non disponible.");
-            return;
-        }
-
-        recognition = new SpeechRecognition();
-
-        recognition.lang = "fr-FR";
-        recognition.continuous = true;
-        recognition.interimResults = true;
-
-        recognition.onstart = function () {
-            listening = true;
-            voiceState.textContent = "NEXUS écoute";
-            addMessage("VOICE", "Microphone actif.");
-        };
-
-        recognition.onresult = function (event) {
-
-            let transcript = "";
-
-            for (
-                let i = event.resultIndex;
-                i < event.results.length;
-                i++
-            ) {
-                transcript += event.results[i][0].transcript;
-            }
-
-            transcript = transcript.trim();
-
-            if (transcript) {
-                voiceHelp.textContent = '"' + transcript + '"';
-            }
-
-            const last =
-                event.results[event.results.length - 1];
-
-            if (last && last.isFinal && transcript) {
-                addMessage("USER", transcript);
-
-                /*
-                 * Ici NEXUS peut être relié à ton vrai backend/API.
-                 * Pour l'instant on affiche la commande reçue.
-                 */
-
-                voiceState.textContent = "NEXUS a reçu ta demande";
-
-                setTimeout(function () {
-                    if (listening) {
-                        voiceState.textContent = "NEXUS écoute";
-                        voiceHelp.textContent =
-                            "Tu peux continuer à parler.";
-                    }
-                }, 1800);
-            }
-        };
-
-        recognition.onerror = function (event) {
-
-            if (event.error === "not-allowed") {
-                voiceState.textContent = "Microphone refusé";
-
-                voiceHelp.textContent =
-                    "Autorise l'accès au microphone dans ton navigateur.";
-
-                voiceError.textContent =
-                    "Permission microphone nécessaire.";
-
-                voiceError.style.display = "block";
-            }
-            else {
-                voiceState.textContent = "Erreur vocale";
-
-                voiceError.textContent =
-                    "Erreur : " + event.error;
-
-                voiceError.style.display = "block";
-            }
-
-            addMessage("VOICE", "Erreur : " + event.error);
-        };
-
-        recognition.onend = function () {
-
-            if (listening) {
-                try {
-                    recognition.start();
-                } catch (e) {}
-            }
-        };
-
-        try {
-            recognition.start();
-        }
-        catch (error) {
-            voiceError.textContent =
-                "Impossible de démarrer le microphone.";
-
-            voiceError.style.display = "block";
-        }
     }
 
-    talkButton.addEventListener("click", openVoice);
-    stopVoice.addEventListener("click", closeVoice);
+}
 
-    voicePanel.addEventListener("click", function (event) {
-        if (event.target === voicePanel) {
-            closeVoice();
+
+/* ============================================================
+   ARRETER
+   ============================================================ */
+
+function stopListening() {
+
+    if (!recognition) {
+        return;
+    }
+
+    try {
+        recognition.stop();
+    } catch (error) {
+        console.log(error);
+    }
+
+    listening = false;
+
+    core.classList.remove("listening");
+
+    voiceButton.textContent = "🎙 PARLER À NEXUS";
+
+}
+
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+
+startButton.addEventListener(
+    "click",
+    openNexus
+);
+
+voiceButton.addEventListener(
+    "click",
+    () => {
+
+        if (listening) {
+            stopListening();
+        } else {
+            startListening();
         }
+
+    }
+);
+
+backButton.addEventListener(
+    "click",
+    goHome
+);
+
+
+/* ============================================================
+   RECHERCHE WIKIPEDIA
+   ============================================================ */
+
+async function searchWikipedia(query) {
+
+    const url =
+        "https://fr.wikipedia.org/w/api.php" +
+        "?action=query" +
+        "&generator=search" +
+        "&gsrsearch=" + encodeURIComponent(query) +
+        "&gsrlimit=4" +
+        "&prop=extracts|info" +
+        "&exintro=1" +
+        "&explaintext=1" +
+        "&inprop=url" +
+        "&format=json" +
+        "&origin=*";
+
+    try {
+
+        const response = await fetch(url);
+
+        const data = await response.json();
+
+        const pages = data.query && data.query.pages
+            ? Object.values(data.query.pages)
+            : [];
+
+        return pages;
+
+    } catch (error) {
+
+        console.error(error);
+
+        return [];
+
+    }
+
+}
+
+
+/* ============================================================
+   AFFICHAGE DES RESULTATS
+   ============================================================ */
+
+function clearResults() {
+
+    leftResults.innerHTML = "";
+    rightResults.innerHTML = "";
+
+    leftResults.classList.remove("visible");
+    rightResults.classList.remove("visible");
+
+}
+
+
+function showResults(results) {
+
+    clearResults();
+
+    if (!results.length) {
+        return;
+    }
+
+    results.forEach((result, index) => {
+
+        const card = document.createElement("article");
+
+        card.className = "result-card";
+
+        const title =
+            result.title || "Résultat";
+
+        const extract =
+            result.extract ||
+            "Aucune description disponible.";
+
+        const link =
+            result.fullurl ||
+            "#";
+
+        card.innerHTML = `
+            <h3>${escapeHtml(title)}</h3>
+            <p>${escapeHtml(extract)}</p>
+            <a href="${link}" target="_blank" rel="noopener">
+                Ouvrir la source →
+            </a>
+        `;
+
+        if (index % 2 === 0) {
+            leftResults.appendChild(card);
+        } else {
+            rightResults.appendChild(card);
+        }
+
     });
 
-})();
+    leftResults.classList.add("visible");
+
+    if (results.length > 1) {
+        rightResults.classList.add("visible");
+    }
+
+}
+
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* ============================================================
+   TRAITEMENT DES COMMANDES
+   ============================================================ */
+
+async function processCommand(command) {
+
+    const text = command.toLowerCase().trim();
+
+    systemState.textContent = "ANALYSE EN COURS";
+
+    /* Bonjour */
+
+    if (
+        text.includes("bonjour") ||
+        text.includes("salut") ||
+        text.includes("hello")
+    ) {
+
+        speak(
+            "Bonjour. Je suis NEXUS. Que puis-je faire pour toi ?"
+        );
+
+        return;
+    }
+
+
+    /* Identité */
+
+    if (
+        text.includes("qui es-tu") ||
+        text.includes("qui es tu") ||
+        text.includes("présente-toi") ||
+        text.includes("presente toi")
+    ) {
+
+        speak(
+            "Je suis NEXUS, ton assistant intelligent."
+        );
+
+        return;
+    }
+
+
+    /* Merci */
+
+    if (
+        text.includes("merci")
+    ) {
+
+        speak(
+            "Avec plaisir."
+        );
+
+        return;
+    }
+
+
+    /* Recherche */
+
+    let query = "";
+
+    if (text.startsWith("recherche ")) {
+
+        query = command.substring(10).trim();
+
+    } else if (text.startsWith("cherche ")) {
+
+        query = command.substring(8).trim();
+
+    } else if (text.startsWith("trouve ")) {
+
+        query = command.substring(7).trim();
+
+    }
+
+
+    if (query) {
+
+        clearResults();
+
+        systemState.textContent = "RECHERCHE EN COURS";
+
+        const results =
+            await searchWikipedia(query);
+
+        showResults(results);
+
+        if (results.length) {
+
+            const first = results[0];
+
+            const summary =
+                first.extract
+                    ? first.extract.substring(0, 420)
+                    : "J'ai trouvé plusieurs résultats.";
+
+            speak(
+                "J'ai trouvé des informations sur " +
+                query +
+                ". " +
+                summary
+            );
+
+        } else {
+
+            speak(
+                "Je n'ai trouvé aucun résultat pour " +
+                query +
+                "."
+            );
+
+        }
+
+        return;
+    }
+
+
+    /* Commande recherche naturelle */
+
+    if (
+        text.includes("recherche") ||
+        text.includes("cherche") ||
+        text.includes("informations sur")
+    ) {
+
+        const cleaned = command
+            .replace(/recherche/gi, "")
+            .replace(/cherche/gi, "")
+            .replace(/informations sur/gi, "")
+            .trim();
+
+        if (cleaned) {
+
+            const results =
+                await searchWikipedia(cleaned);
+
+            showResults(results);
+
+            if (results.length) {
+
+                speak(
+                    "Voici ce que j'ai trouvé sur " +
+                    cleaned +
+                    "."
+                );
+
+            } else {
+
+                speak(
+                    "Je n'ai rien trouvé sur " +
+                    cleaned +
+                    "."
+                );
+
+            }
+
+            return;
+        }
+    }
+
+
+    /* Commande inconnue */
+
+    speak(
+        "J'ai bien reçu ta demande : " +
+        command +
+        ". Pour effectuer une recherche, dis par exemple recherche espace France."
+    );
+
+}
+
+
+/* ============================================================
+   ENTREE CLAVIER
+   ============================================================ */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.code === "Space" &&
+            nexusInterface.classList.contains("visible") &&
+            document.activeElement.tagName !== "BUTTON"
+        ) {
+
+            event.preventDefault();
+
+            if (listening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+
+        }
+
+        if (event.key === "Escape") {
+
+            if (
+                nexusInterface.classList.contains("visible")
+            ) {
+
+                goHome();
+
+            }
+
+        }
+
+    }
+);
 </script>
 
 </body>
 </html>
-
 
