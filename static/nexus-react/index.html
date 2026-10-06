@@ -1,2 +1,101 @@
 ﻿
 
+<style id="nexus-pcfinder-style">
+#nexus-pcfinder-launcher {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9998;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,220,255,.6);
+    background: rgba(3,12,25,.96);
+    color: #8feaff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(0,200,255,.2);
+}
+
+#nexus-pcfinder-launcher:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(0,220,255,.4);
+}
+
+#nexus-pcfinder-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #020712;
+}
+
+#nexus-pcfinder-overlay.open {
+    display: block;
+}
+
+#nexus-pcfinder-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+#nexus-pcfinder-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 100000;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 50%;
+    background: rgba(0,0,0,.75);
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+</style>
+
+<button id="nexus-pcfinder-launcher" type="button">
+    🖥️ PC FINDER
+</button>
+
+<div id="nexus-pcfinder-overlay">
+    <button id="nexus-pcfinder-close" type="button">×</button>
+
+    <iframe
+        id="nexus-pcfinder-frame"
+        src="../../app.html"
+        title="Nexus Assistant Numérique PC Finder"
+        allow="microphone; autoplay; fullscreen">
+    </iframe>
+</div>
+
+<script>
+(function () {
+    const button = document.getElementById("nexus-pcfinder-launcher");
+    const overlay = document.getElementById("nexus-pcfinder-overlay");
+    const close = document.getElementById("nexus-pcfinder-close");
+
+    if (!button || !overlay || !close) return;
+
+    button.onclick = function () {
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+    };
+
+    close.onclick = function () {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+    };
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            overlay.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+    });
+})();
+</script>
