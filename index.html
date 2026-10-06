@@ -1,75 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <meta name="theme-color" content="#0e151c" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Nexus Assistant NumÃ©rique PC Finder</title>
-    <meta name="description" content="Nexus Assistant NumÃ©rique PC Finder Ã¢â‚¬â€ une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Nexus Assistant NumÃ©rique PC Finder" />
-    <meta property="og:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nexus Assistant NumÃ©rique PC Finder" />
-    <meta name="twitter:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dÃƒÂ©mo." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-C4bZbmBa.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CC51PXCK.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  <script>
-(function () {
-    function connectNexusButton() {
-        var elements = document.querySelectorAll("a, button, [role='button']");
-        for (var i = 0; i < elements.length; i++) {
-            var el = elements[i];
-            var label = (el.textContent || "").replace(/\s+/g, " ").trim();
-
-            if (
-                label === "Accéder à NEXUS" ||
-                label === "Acces a NEXUS" ||
-                label === "Accès à NEXUS" ||
-                label.indexOf("Accéder à NEXUS") !== -1 ||
-                label.indexOf("Accès à NEXUS") !== -1
-            ) {
-                el.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    if (event.stopImmediatePropagation) {
-                        event.stopImmediatePropagation();
-                    }
-                    window.location.href = "/NEXUS/console/";
-                }, true);
-            }
-        }
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", connectNexusButton);
-    } else {
-        connectNexusButton();
-    }
-
-    var observer = new MutationObserver(function () {
-        connectNexusButton();
-    });
-
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
-})();
-</script>
-<script id="nexus-console-bridge">
+<!DOCTYPE html> <html lang="fr">   <head>     <meta charset="UTF-8" />     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />     <meta name="theme-color" content="#0e151c" />     <meta name="mobile-web-app-capable" content="yes" />     <meta name="apple-mobile-web-app-capable" content="yes" />     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />     <title>Nexus Assistant Numâ”œÂ®rique PC Finder</title>     <meta name="description" content="Nexus Assistant Numâ”œÂ®rique PC Finder â”œÃ³Ã”Ã©Â¼Ã”Ã‡Ã˜ une console locale pour filtrer et comparer des PC gaming en mode dâ”œÃ¢â”¬Â®mo." />     <meta name="robots" content="index, follow" />     <meta property="og:title" content="Nexus Assistant Numâ”œÂ®rique PC Finder" />     <meta property="og:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dâ”œÃ¢â”¬Â®mo." />     <meta property="og:type" content="website" />     <meta name="twitter:card" content="summary_large_image" />     <meta name="twitter:title" content="Nexus Assistant Numâ”œÂ®rique PC Finder" />     <meta name="twitter:description" content="Une console locale pour filtrer et comparer des PC gaming en mode dâ”œÃ¢â”¬Â®mo." />     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />     <link rel="manifest" href="/manifest.webmanifest" />     <link rel="preconnect" href="https://fonts.googleapis.com">     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">     <script type="module" crossorigin src="/assets/index-C4bZbmBa.js"></script>     <link rel="stylesheet" crossorigin href="/assets/index-CC51PXCK.css">   </head>   <body>     <div id="root"></div>   <script id="nexus-console-bridge">
 (function () {
     function connectNexus() {
         var elements = document.querySelectorAll("a, button");
@@ -90,14 +19,11 @@
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", connectNexus);
-    } else {
+    }
+
+    if (document.readyState !== "loading") {
         connectNexus();
     }
 })();
 </script>
-</body>
-</html>
-
-
-
-
+</body> </html> 
