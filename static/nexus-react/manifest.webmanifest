@@ -1,0 +1,19 @@
+﻿{
+  "name": "NEXUS",
+  "short_name": "NEXUS",
+  "description": "NEXUS Web - assistant intelligent",
+  "start_url": "/NEXUS/app.html",
+  "scope": "/NEXUS/",
+  "display": "standalone",
+  "background_color": "#020712",
+  "theme_color": "#020712",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/NEXUS/static/nexus-react/nexus-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

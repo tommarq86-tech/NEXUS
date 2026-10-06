@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
+<title>NEXUS — Espace NEXUS</title>
+<link rel="stylesheet" href="static/style.css">
+<script src="maintenance.js"></script>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<a href="index.html" class="logo">NEXUS</a>
+
+<nav class="nav-links">
+    <a href="app.html">NEXUS Web</a>
+    <a href="telechargement.html">NEXUS Windows</a>
+    <a href="compte.html">Mon compte</a>
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // PRIVATE SPACE</span>
+
+<h1 id="welcome">Espace NEXUS.</h1>
+
+<p class="hero-text">
+Bienvenue dans ton espace personnel.
+</p>
+
+<div class="feature-grid">
+
+<article class="feature-card">
+
+<div class="feature-icon">◉</div>
+
+<h3 id="username">Utilisateur</h3>
+
+<p id="email">
+Chargement...
+</p>
+
+<p>
+Statut :
+<strong id="role">...</strong>
+</p>
+
+</article>
+
+<article class="feature-card">
+
+<div class="feature-icon">◆</div>
+
+<h3>NEXUS Web</h3>
+
+<p>
+Accède à l'application NEXUS directement depuis ton navigateur.
+</p>
+
+<a href="app.html" class="btn btn-primary">
+Ouvrir NEXUS Web
+</a>
+
+</article>
+
+<article class="feature-card">
+
+<div class="feature-icon">▣</div>
+
+<h3>NEXUS Windows</h3>
+
+<p>
+Installe la version Windows portable de NEXUS.
+</p>
+
+<a href="telechargement.html" class="btn btn-primary">
+Installer NEXUS Windows
+</a>
+
+</article>
+
+<article class="feature-card">
+
+<div class="feature-icon">×</div>
+
+<h3>Session</h3>
+
+<p>
+Déconnecte ton compte NEXUS sur cet appareil.
+</p>
+
+<button id="logout" class="btn btn-primary">
+Déconnexion
+</button>
+
+</article>
+
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="terminal-top">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="terminal-content">
+
+<p class="terminal-green">
+&gt; NEXUS ACCESS
+</p>
+
+<p id="terminalUser">
+Chargement du profil...
+</p>
+
+<p class="terminal-green">
+&gt; ACCESS GRANTED
+</p>
+
+<div class="terminal-cursor"></div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+
+const accountData =
+    localStorage.getItem("nexusAccount");
+
+const loggedIn =
+    localStorage.getItem("nexusLoggedIn");
+
+if (!accountData || loggedIn !== "true") {
+
+    window.location.replace("connexion.html");
+
+} else {
+
+    const account =
+        JSON.parse(accountData);
+
+    document.getElementById("username")
+        .textContent =
+        account.username;
+
+    document.getElementById("email")
+        .textContent =
+        account.email;
+
+    document.getElementById("role")
+        .textContent =
+        account.role;
+
+    document.getElementById("terminalUser")
+        .textContent =
+        "Utilisateur : " + account.username;
+}
+
+document
+.getElementById("logout")
+.addEventListener("click", function() {
+
+    localStorage.removeItem(
+        "nexusLoggedIn"
+    );
+
+    window.location.replace(
+        "index.html"
+    );
+
+});
+
+</script>
+
+</body>
+</html>

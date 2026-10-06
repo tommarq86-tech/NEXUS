@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
+<title>NEXUS — Windows</title>
+<link rel="stylesheet" href="static/style.css">
+<script src="maintenance.js"></script>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<a href="index.html" class="logo">NEXUS</a>
+
+<nav class="nav-links">
+    <a href="compte.html">Espace NEXUS</a>
+    <a href="index.html">Accueil</a>
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // WINDOWS</span>
+
+<h1>NEXUS Windows.</h1>
+
+<p class="hero-text">
+Télécharge et installe NEXUS sur ton PC Windows.
+</p>
+
+<div class="feature-grid">
+
+<article class="feature-card">
+
+<h3>Version portable</h3>
+
+<p>
+Lance NEXUS sans installation classique.
+</p>
+
+<a
+    href="static/downloads/NEXUS-Portable.zip"
+    class="btn btn-primary"
+    download>
+Télécharger NEXUS Portable
+</a>
+
+</article>
+
+<article class="feature-card">
+
+<h3>Version Windows</h3>
+
+<p>
+Installe la version Windows actuellement publiée.
+</p>
+
+<a
+    href="static/downloads/NEXUS-Setup.exe"
+    class="btn btn-primary"
+    download>
+Télécharger NEXUS Windows
+</a>
+
+</article>
+
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="terminal-top">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="terminal-content">
+
+<p class="terminal-green">
+&gt; NEXUS WINDOWS
+</p>
+
+<p>
+Distribution officielle NEXUS.
+</p>
+
+<p class="terminal-green">
+&gt; READY_
+</p>
+
+<div class="terminal-cursor"></div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+
+const loggedIn =
+    localStorage.getItem("nexusLoggedIn");
+
+if (loggedIn !== "true") {
+    window.location.replace("connexion.html");
+}
+
+</script>
+
+</body>
+</html>

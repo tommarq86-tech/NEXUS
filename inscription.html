@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/NEXUS/nexus-icon-512.png">
+<title>NEXUS — Créer un compte</title>
+<link rel="stylesheet" href="static/style.css">
+<script src="maintenance.js"></script>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<a href="index.html" class="logo">NEXUS</a>
+
+<nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="connexion.html">Connexion</a>
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="code-label">NEXUS // REGISTER</span>
+
+<h1>Créer un compte.</h1>
+
+<p class="hero-text">
+    Crée ton espace personnel NEXUS.
+</p>
+
+<form id="registerForm">
+
+<div class="feature-card">
+
+<input
+    id="username"
+    type="text"
+    placeholder="Nom d'utilisateur"
+    autocomplete="username"
+    required
+    style="width:100%;box-sizing:border-box;margin:10px 0;padding:14px;background:#111;border:1px solid #333;color:inherit;">
+
+<input
+    id="email"
+    type="email"
+    placeholder="Adresse e-mail"
+    autocomplete="email"
+    required
+    style="width:100%;box-sizing:border-box;margin:10px 0;padding:14px;background:#111;border:1px solid #333;color:inherit;">
+
+<input
+    id="password"
+    type="password"
+    placeholder="Mot de passe"
+    autocomplete="new-password"
+    minlength="8"
+    required
+    style="width:100%;box-sizing:border-box;margin:10px 0;padding:14px;background:#111;border:1px solid #333;color:inherit;">
+
+<button type="submit" class="btn btn-primary">
+    Créer mon compte
+</button>
+
+<p id="message"></p>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="hero-card">
+
+<div class="terminal-top">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="terminal-content">
+    <p class="terminal-green">&gt; NEXUS REGISTER</p>
+    <p>Initialisation du profil...</p>
+    <p class="terminal-green">&gt; READY_</p>
+    <div class="terminal-cursor"></div>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 NEXUS — Tous droits réservés.
+</footer>
+
+<script>
+
+document
+.getElementById("registerForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const username = document
+        .getElementById("username")
+        .value
+        .trim();
+
+    const email = document
+        .getElementById("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const password = document
+        .getElementById("password")
+        .value;
+
+    const message = document.getElementById("message");
+
+    if (password.length < 8) {
+        message.textContent =
+            "Le mot de passe doit contenir au moins 8 caractères.";
+        return;
+    }
+
+    const account = {
+        username: username,
+        email: email,
+        password: password,
+        role: "USER"
+    };
+
+    localStorage.setItem(
+        "nexusAccount",
+        JSON.stringify(account)
+    );
+
+    localStorage.setItem(
+        "nexusLoggedIn",
+        "true"
+    );
+
+    message.textContent =
+        "Compte créé. Redirection...";
+
+    setTimeout(function() {
+        window.location.href = "compte.html";
+    }, 700);
+
+});
+
+</script>
+
+</body>
+</html>
