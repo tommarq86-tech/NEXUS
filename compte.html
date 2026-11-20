@@ -42,66 +42,13 @@ Bienvenue dans ton espace personnel.
 
 <article class="feature-card">
 
-<div class="feature-icon">◉</div>
+<h3>Comptes connectés</h3>
 
-<h3 id="username">Utilisateur</h3>
+<div id="accountsList"></div>
 
-<p id="email">
-Chargement...
-</p>
-
-<p>
-Statut :
-<strong id="role">...</strong>
-</p>
-
-</article>
-
-<article class="feature-card">
-
-<div class="feature-icon">◆</div>
-
-<h3>NEXUS Web</h3>
-
-<p>
-Accède à l'application NEXUS directement depuis ton navigateur.
-</p>
-
-<a href="app.html" class="btn btn-primary">
-Ouvrir NEXUS Web
+<a href="connexion.html" class="btn btn-primary">
+Ajouter un autre compte
 </a>
-
-</article>
-
-<article class="feature-card">
-
-<div class="feature-icon">▣</div>
-
-<h3>NEXUS Windows</h3>
-
-<p>
-Installe la version Windows portable de NEXUS.
-</p>
-
-<a href="telechargement.html" class="btn btn-primary">
-Installer NEXUS Windows
-</a>
-
-</article>
-
-<article class="feature-card">
-
-<div class="feature-icon">×</div>
-
-<h3>Session</h3>
-
-<p>
-Déconnecte ton compte NEXUS sur cet appareil.
-</p>
-
-<button id="logout" class="btn btn-primary">
-Déconnexion
-</button>
 
 </article>
 
@@ -147,51 +94,43 @@ Chargement du profil...
 
 <script>
 
-const accountData =
-    localStorage.getItem("nexusAccount");
+const loggedIn = localStorage.getItem("nexusLoggedIn");
 
-const loggedIn =
-    localStorage.getItem("nexusLoggedIn");
+let accounts = [];
+try {
+    accounts = JSON.parse(localStorage.getItem("nexusAccounts")) || [];
+} catch (e) {
+    accounts = [];
+}
 
-if (!accountData || loggedIn !== "true") {
+let current = null;
+try {
+    current = JSON.parse(localStorage.getItem("nexusAccount"));
+} catch (e) {
+    current = null;
+}
+
+if (!current || loggedIn !== "true") {
 
     window.location.replace("connexion.html");
 
 } else {
 
-    const account =
-        JSON.parse(accountData);
+    if (!accounts.some(function(a) { return a.email === current.email; })) {
+        accounts.push(current);
+        localStorage.setItem("nexusAccounts", JSON.stringify(accounts));
+    }
 
-    document.getElementById("username")
-        .textContent =
-        account.username;
+    const list = document.getElementById("accountsList");
 
-    document.getElementById("email")
-        .textContent =
-        account.email;
+    accounts.forEach(function(a) {
+        const p = document.createElement("p");
+        p.textContent = a.username + " — " + a.email + (a.email === current.email ? " (actif)" : "");
+        list.appendChild(p);
+    });
 
-    document.getElementById("role")
-        .textContent =
-        account.role;
-
-    document.getElementById("terminalUser")
-        .textContent =
-        "Utilisateur : " + account.username;
+    document.getElementById("terminalUser").textContent = "Utilisateur : " + current.username;
 }
-
-document
-.getElementById("logout")
-.addEventListener("click", function() {
-
-    localStorage.removeItem(
-        "nexusLoggedIn"
-    );
-
-    window.location.replace(
-        "index.html"
-    );
-
-});
 
 </script>
 

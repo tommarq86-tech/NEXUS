@@ -118,6 +118,14 @@ form.addEventListener("submit", function(event) {
         .getElementById("password")
         .value;
 
+    try {
+        const list = JSON.parse(localStorage.getItem("nexusAccounts")) || [];
+        const found = list.find(function(a) { return a.email === email && a.password === password; });
+        if (found) {
+            localStorage.setItem("nexusAccount", JSON.stringify(found));
+        }
+    } catch (e) {}
+    
     const stored = localStorage.getItem("nexusAccount");
 
     if (!stored) {

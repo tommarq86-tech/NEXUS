@@ -139,7 +139,23 @@ document
         password: password,
         role: "USER"
     };
-
+    let accounts = [];
+    try {
+        accounts = JSON.parse(localStorage.getItem("nexusAccounts")) || [];
+    } catch (e) {
+        accounts = [];
+    }
+    if (!Array.isArray(accounts)) accounts = [];
+    try {
+        const oldAccount = JSON.parse(localStorage.getItem("nexusAccount"));
+        if (oldAccount && oldAccount.email && !accounts.some(function(a) { return a.email === oldAccount.email; })) {
+            accounts.push(oldAccount);
+        }
+    } catch (e) {}
+    accounts = accounts.filter(function(a) { return a.email !== account.email; });
+    accounts.push(account);
+    localStorage.setItem("nexusAccounts", JSON.stringify(accounts));
+    
     localStorage.setItem(
         "nexusAccount",
         JSON.stringify(account)
