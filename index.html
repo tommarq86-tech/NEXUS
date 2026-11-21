@@ -881,10 +881,10 @@
                 label.indexOf("Acces a NEXUS") !== -1
             ) {
                 if (element.tagName.toLowerCase() === "a") {
-                    element.setAttribute("href", "/NEXUS/console/");
+                   element.setAttribute("href", "/NEXUS/nexus-app/");
                 } else {
                     element.addEventListener("click", function () {
-                        window.location.href = "/NEXUS/console/";
+                    window.location.href = "/NEXUS/nexus-app/";
                     });
                 }
             }
